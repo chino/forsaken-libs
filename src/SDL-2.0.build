@@ -15,7 +15,7 @@ fi
 
 	# needed to add this recently
 	[[ $os == macosx ]] &&
-		sed -i 's/-falign-loops=16//g' Makefile
+		sed -i.bak 's/-falign-loops=16//g' Makefile
 
 	make install DESTDIR=$PWD/../.. \
 		LDFLAGS=' -L/usr/lib/i386-linux-gnu/mesa' # this is benign if not on linux

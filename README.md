@@ -57,7 +57,8 @@ You obviously don't want to constantly rebuild this folder every time you want t
 You can simply create multiple clones of this project and update prefix= in the pkgconfig files *.pc with the new pathname that you have chosen.
 
 ```shell
-sed -i "s/prefix=.*/prefix=$new_path/g" lib/pkgconfig/* src/pkgconfig/*
+sed -i.bak "s/prefix=.*/prefix=$new_path/g" lib/pkgconfig/*.pc src/pkgconfig/*.pc
+rm lib/pkgconfig/*.bak src/pkgconfig/*.bak
 ```
 
 ## Scripts
@@ -108,12 +109,6 @@ The scripts above gets around this by doing a few non standard symlinks.
 
 ## Mac OSX Linking
 
-### Home Brew
-
-Note that many build scripts expect gnu like utilities.
-
-Particularly you'll need to alias find=gfind and sed=gsed.
-
 ### What happened to LD_LIBRARY_PATH ?
 
 Normally on linux one would just set LD_LIBRARY_PATH.
@@ -139,7 +134,7 @@ You can get around this with tricks like @executable_path which will be resolved
 Hence make sure dylib paths are all correct:
 
 ```shell
-dyldinfo -dylibs ./projectx
+otool -L ./projectx
 ```
 
 

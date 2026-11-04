@@ -12,7 +12,7 @@ if uname -a | grep -q Darwin; then
 	osx_cli_tools_dir="/Library/Developer/CommandLineTools/usr/bin"
 	export PATH="$osx_cli_tools_dir:$PATH"
 
-	for cmd in dyldinfo install_name_tool; do
+	for cmd in otool install_name_tool; do
 		if ! which "$cmd" &>/dev/null; then
 			echo "Missing: $cmd"
 			echo "Please install OSX xcode CLI tools"
@@ -20,8 +20,8 @@ if uname -a | grep -q Darwin; then
 		fi
 	done
 
-	dyldinfo -dylibs ./projectx |
-	grep dylib |
+	otool -L ./projectx |
+	awk '/dylib/ {print $1}' |
 	while read -r path; do
 		file=${path/*\/}
 		[[ -f "$LIB/$file" ]] || continue
