@@ -2,6 +2,9 @@
 cd "$(dirname -- "$0")"
 v=SDL-1.2.15
 tar -xvzf ${v}.tar.gz
+# the bundled 2009 config.guess/config.sub do not know aarch64
+d=/usr/share/misc; [[ -f $d/config.guess ]] || d=$(automake --print-libdir)
+cp "$d"/config.{guess,sub} $v/build-scripts/
 
 os=$(uname -a | grep -qi darwin && echo macosx || echo linux)
 

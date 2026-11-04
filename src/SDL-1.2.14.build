@@ -2,6 +2,9 @@
 cd "$(dirname -- "$0")"
 v=SDL-1.2.14
 tar -xvzf $v.tar.gz
+# the bundled 2009 config.guess/config.sub do not know aarch64
+d=/usr/share/misc; [[ -f $d/config.guess ]] || d=$(automake --print-libdir)
+cp "$d"/config.{guess,sub} $v/build-scripts/
 
 # apply 1 char patch to fix up assembly issue
 # http://hg.libsdl.org/SDL/rev/32f0f603a0c8

@@ -2,6 +2,9 @@
 cd "$(dirname -- "$0")"
 v=enet-1.2.5
 tar -xvzf $v.tar.gz
+# the bundled 2009 config.guess/config.sub do not know aarch64
+d=/usr/share/misc; [[ -f $d/config.guess ]] || d=$(automake --print-libdir)
+cp "$d"/config.{guess,sub} $v/
 (cd $v; ./configure --prefix= && make install DESTDIR=$PWD/../..;) || exit 1
 cp pkgconfig/libenet.pc ../lib/pkgconfig/
 echo "Built: enet"

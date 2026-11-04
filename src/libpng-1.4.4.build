@@ -2,6 +2,9 @@
 cd "$(dirname -- "$0")"
 v=libpng-1.4.4
 tar -xvzf $v.tar.gz
+# the bundled 2009 config.guess/config.sub do not know aarch64
+d=/usr/share/misc; [[ -f $d/config.guess ]] || d=$(automake --print-libdir)
+cp "$d"/config.{guess,sub} $v/
 (cd $v; ./configure --prefix= && make install DESTDIR=$PWD/../..;) || exit 1
 cp pkgconfig/libpng.pc ../lib/pkgconfig/
 echo "Built: libpng"
