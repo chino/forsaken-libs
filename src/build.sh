@@ -5,6 +5,8 @@ rm build.log
 set -e # die if any of the following fail
 # pass --rebuild if you want to rebuild everything
 rebuild=false; [[ $* =~ --rebuild ]] && rebuild=true
+# pass --sdl2 to also build SDL2 (then make Forsaken with SDL=2)
+sdl2=false; [[ $* =~ --sdl2 ]] && sdl2=true
 function run
 {
 	if ! $rebuild && [[ -f ${1}.built ]]; then
@@ -26,6 +28,7 @@ function run
 	run ./enet-1.2.5.build
 	run ./SDL-1.2.build.latest
 	run ./openal-soft-1.14.build
+	if $sdl2; then run ./SDL-2.0.build.latest; fi
 
 } 2>&1 | tee build.log
 if [[ ${PIPESTATUS[0]} != 0 ]]; then

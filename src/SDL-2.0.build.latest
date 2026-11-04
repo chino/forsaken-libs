@@ -1,7 +1,8 @@
 #!/bin/bash -x
 cd "$(dirname -- "$0")"
-f=SDL-2.0.0-latest
-[[ -d $f ]] || hg clone http://hg.libsdl.org/SDL "$f"
+v=2.32.10
+f=SDL2-$v
+[[ -d $f ]] || git clone --depth 1 --branch release-$v https://github.com/libsdl-org/SDL "$f" || exit 1
 mkdir "$f/tmp"
 (
 	cd "$f/tmp" &&
